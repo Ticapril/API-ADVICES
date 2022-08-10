@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consumindo API conselhos</title>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>   
+</head>
+<body>
+    <h1> The best Advices from <strong>BRAZIL</strong></h1>
+    
+
+<div id="app">{{ message }}</div>
+
+<script>
+  const { createApp } = Vue
+
+  createApp({
+    data() {
+      return {
+        message: 'ola',
+        advices: []
+    }
+    },
+    async created() {
+        await this.getAdvice('men');
+        console.log(this.advices);
+    },
+    methods: {
+        async getAdvice(typeAdvice) {
+            const data = await axios.get(`https://api.adviceslip.com/advice/search/${typeAdvice}`);
+            this.advices = data;
+        }
+    }
+    }
+  ).mount('#app');
+</script>
+
+<script src="js/app.js"></script>
+
+</body>
+</html>
